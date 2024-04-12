@@ -14,8 +14,8 @@ model User {
   password_hash String
   created_at    DateTime @default(now())
 
-  stock    Stock  @relation(fields: [stock_id], references: [id])
-  stock_id String
+  stock    Stock?  @relation(fields: [stock_id], references: [id])
+  stock_id String?
 
   @@map("users")
 }
