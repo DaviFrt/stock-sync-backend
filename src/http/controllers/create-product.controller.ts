@@ -9,16 +9,18 @@ export async function createProduct(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
+  const user_id = request.user.sign.sub
+
   const createBodySchema = z.object({
-    user_id: z.string().uuid(),
     name: z.string(),
     description: z.string().optional(),
     price: z.number(),
     quantity: z.number(),
   })
 
-  const { name, description, price, quantity, user_id } =
-    createBodySchema.parse(request.body)
+  const { name, description, price, quantity } = createBodySchema.parse(
+    request.body,
+  )
 
   try {
     const prismaProductsRepository = new PrismaProductsRepository()

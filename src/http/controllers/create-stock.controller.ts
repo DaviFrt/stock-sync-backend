@@ -9,12 +9,13 @@ export async function createStock(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
+  const user_id = request.user.sign.sub
+
   const createBodySchema = z.object({
-    user_id: z.string().uuid(),
     name: z.string(),
   })
 
-  const { name, user_id } = createBodySchema.parse(request.body)
+  const { name } = createBodySchema.parse(request.body)
 
   try {
     const prismaStocksRepository = new PrismaStocksRepository()
