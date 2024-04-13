@@ -1,5 +1,5 @@
 import { Prisma, User } from '@prisma/client'
-import { UsersRepository } from '../users-repository'
+import { CreateStockIdRequest, UsersRepository } from '../users-repository'
 import { randomUUID } from 'crypto'
 
 export class InMemoryUsersRepository implements UsersRepository {
@@ -26,6 +26,25 @@ export class InMemoryUsersRepository implements UsersRepository {
     if (!user) {
       return null
     }
+
+    return user
+  }
+
+  async findById(user_id: string) {
+    const user = this.items.find((item) => item.id === user_id)
+
+    if (!user) {
+      return null
+    }
+
+    return user
+  }
+
+  async createStockId({ user_id, stock_id }: CreateStockIdRequest) {
+    const userIndex = this.items.findIndex((item) => item.id === user_id)
+    const user = this.items[userIndex]
+
+    user.stock_id = stock_id
 
     return user
   }

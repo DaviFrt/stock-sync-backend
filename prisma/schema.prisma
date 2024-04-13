@@ -24,8 +24,6 @@ model Stock {
   id   String @id @default(uuid())
   name String
 
-  user_id String
-
   products Product[]
   user     User[]
 
