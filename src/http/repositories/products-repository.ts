@@ -7,4 +7,5 @@ export interface CreateProductRequest {
 
 export interface ProductsRepository {
   create({ data, stock_id }: CreateProductRequest): Promise<Product>
+  getAll(stock_id: string): Promise<Product[]>
 }

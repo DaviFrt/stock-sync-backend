@@ -5,6 +5,7 @@ import { register } from './controllers/register.controller'
 import { authenticate } from './controllers/authenticate.controller'
 import { createStock } from './controllers/create-stock.controller'
 import { createProduct } from './controllers/create-product.controller'
+import { getAllProducts } from './controllers/get-all-products.controller'
 
 export async function appRoutes(app: FastifyInstance) {
   app.post('/users', register)
@@ -12,4 +13,5 @@ export async function appRoutes(app: FastifyInstance) {
 
   app.post('/stocks', { onRequest: [verifyJWT] }, createStock)
   app.post('/products', { onRequest: [verifyJWT] }, createProduct)
+  app.get('/products', { onRequest: [verifyJWT] }, getAllProducts)
 }

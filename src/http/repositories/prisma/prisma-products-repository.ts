@@ -18,4 +18,14 @@ export class PrismaProductsRepository implements ProductsRepository {
 
     return product
   }
+
+  async getAll(stock_id: string) {
+    const products = await prisma.product.findMany({
+      where: {
+        stock_id,
+      },
+    })
+
+    return products
+  }
 }

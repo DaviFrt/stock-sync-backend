@@ -11,7 +11,7 @@ export class InMemoryUsersRepository implements UsersRepository {
 
   async create({ data, stock_id }: CreateUserRequest) {
     const user = {
-      id: randomUUID(),
+      id: data.id || randomUUID(),
       name: data.name,
       email: data.email,
       password_hash: data.password_hash,

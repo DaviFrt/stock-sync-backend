@@ -24,4 +24,12 @@ export class InMemoryProductsRepository implements ProductsRepository {
 
     return product
   }
+
+  async getAll(stock_id: string) {
+    const products = this.items.filter(
+      (product) => product.stock_id === stock_id,
+    )
+
+    return products
+  }
 }
