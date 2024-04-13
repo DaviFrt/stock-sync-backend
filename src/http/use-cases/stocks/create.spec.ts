@@ -13,11 +13,13 @@ describe('Create Stock Use Case', () => {
       usersRepository,
     )
 
-    const user = await usersRepository.create({
+    const data = {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password_hash: '123456',
-    })
+    }
+
+    const user = await usersRepository.create({ data })
 
     const { stock } = await createStockUseCase.execute({
       name: 'Lojinha do John Doe',
@@ -35,11 +37,13 @@ describe('Create Stock Use Case', () => {
       usersRepository,
     )
 
-    const user = await usersRepository.create({
+    const data = {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password_hash: '123456',
-    })
+    }
+
+    const user = await usersRepository.create({ data })
 
     await createStockUseCase.execute({
       name: 'Lojinha do John Doe',

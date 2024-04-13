@@ -9,11 +9,13 @@ describe('Authenticate Use Case', () => {
     const usersRepository = new InMemoryUsersRepository()
     const authenticateUsecase = new AuthenticateUseCase(usersRepository)
 
-    await usersRepository.create({
+    const data = {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password_hash: await hash('123456', 6),
-    })
+    }
+
+    await usersRepository.create({ data })
 
     const { user } = await authenticateUsecase.execute({
       email: 'johndoe@example.com',
@@ -27,10 +29,14 @@ describe('Authenticate Use Case', () => {
     const usersRepository = new InMemoryUsersRepository()
     const authenticateUsecase = new AuthenticateUseCase(usersRepository)
 
-    await usersRepository.create({
+    const data = {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password_hash: await hash('123456', 6),
+    }
+
+    await usersRepository.create({
+      data,
     })
 
     await expect(
@@ -45,10 +51,14 @@ describe('Authenticate Use Case', () => {
     const usersRepository = new InMemoryUsersRepository()
     const authenticateUsecase = new AuthenticateUseCase(usersRepository)
 
-    await usersRepository.create({
+    const data = {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password_hash: await hash('123456', 6),
+    }
+
+    await usersRepository.create({
+      data,
     })
 
     await expect(

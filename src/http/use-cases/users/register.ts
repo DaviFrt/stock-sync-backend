@@ -28,11 +28,13 @@ export class RegisterUseCase {
       throw new UserAlreadyExistsError()
     }
 
-    const user = await this.usersRepository.create({
+    const data = {
       name,
       email,
       password_hash,
-    })
+    }
+
+    const user = await this.usersRepository.create({ data })
 
     return { user }
   }
