@@ -1,8 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { PrismaProductsRepository } from '../repositories/prisma/prisma-products-repository'
 import { ResourceNotFoundError } from '../use-cases/errors/resource-not-found-error'
-import { DeleteProductByIdUseCase } from '../use-cases/products/delete-by-id'
+import { makeDeleteProductUseCase } from '../use-cases/factories/make-delete-product-use-case'
 
 export async function deleteProduct(
   request: FastifyRequest,
@@ -14,10 +13,7 @@ export async function deleteProduct(
 
   const { id: product_id } = deleteProductParamsSchema.parse(request.params)
 
-  const prismaProductsRepository = new PrismaProductsRepository()
-  const deleteProductUseCase = new DeleteProductByIdUseCase(
-    prismaProductsRepository,
-  )
+  const deleteProductUseCase = makeDeleteProductUseCase()
 
   try {
     await deleteProductUseCase.execute({

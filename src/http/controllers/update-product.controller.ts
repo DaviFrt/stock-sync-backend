@@ -1,8 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { PrismaProductsRepository } from '../repositories/prisma/prisma-products-repository'
 import { ResourceNotFoundError } from '../use-cases/errors/resource-not-found-error'
-import { UpdateProductUseCase } from '../use-cases/products/update'
+import { makeUpdateProductUseCase } from '../use-cases/factories/make-update-product-use-case'
 
 export async function updateProduct(
   request: FastifyRequest,
@@ -24,10 +23,7 @@ export async function updateProduct(
   )
   const { id: product_id } = updateParamsSchema.parse(request.params)
 
-  const prismaProductsRepository = new PrismaProductsRepository()
-  const udpateProductUseCase = new UpdateProductUseCase(
-    prismaProductsRepository,
-  )
+  const udpateProductUseCase = makeUpdateProductUseCase()
 
   try {
     const product = await udpateProductUseCase.execute({

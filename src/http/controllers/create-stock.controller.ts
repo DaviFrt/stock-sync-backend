@@ -1,9 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { PrismaStocksRepository } from '../repositories/prisma/prisma-stocks-repository'
-import { CreateStockUseCase } from '../use-cases/stocks/create'
 import { UnauthorizedError } from '../use-cases/errors/unauthorized-error'
-import { PrismaUsersRepository } from '../repositories/prisma/prisma-users-repository'
+import { makeCreateStockUseCase } from '../use-cases/factories/make-create-stock-use-case'
 
 export async function createStock(
   request: FastifyRequest,
@@ -18,12 +16,7 @@ export async function createStock(
   const { name } = createBodySchema.parse(request.body)
 
   try {
-    const prismaStocksRepository = new PrismaStocksRepository()
-    const prismaUsersRepository = new PrismaUsersRepository()
-    const createUseCase = new CreateStockUseCase(
-      prismaStocksRepository,
-      prismaUsersRepository,
-    )
+    const createUseCase = makeCreateStockUseCase()
 
     await createUseCase.execute({ name, user_id })
 

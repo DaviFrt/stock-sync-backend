@@ -1,9 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { PrismaProductsRepository } from '../repositories/prisma/prisma-products-repository'
-import { PrismaUsersRepository } from '../repositories/prisma/prisma-users-repository'
-import { GetAllProductsUseCase } from '../use-cases/products/get-all'
-import { GetUserUseCase } from '../use-cases/users/get-user'
 import { ResourceNotFoundError } from '../use-cases/errors/resource-not-found-error'
+import { makeGetUserUseCase } from '../use-cases/factories/make-get-user-use-case'
+import { makeGetAllProductsUseCase } from '../use-cases/factories/make-get-all-products-use-case'
 
 export async function getAllProducts(
   request: FastifyRequest,
@@ -11,12 +9,8 @@ export async function getAllProducts(
 ) {
   const user_id = request.user.sign.sub
 
-  const prismaProductsRepository = new PrismaProductsRepository()
-  const prismaUsersRepository = new PrismaUsersRepository()
-  const getUserUseCase = new GetUserUseCase(prismaUsersRepository)
-  const getAllProductsUseCase = new GetAllProductsUseCase(
-    prismaProductsRepository,
-  )
+  const getUserUseCase = makeGetUserUseCase()
+  const getAllProductsUseCase = makeGetAllProductsUseCase()
 
   try {
     const { user } = await getUserUseCase.execute({

@@ -1,9 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { PrismaProductsRepository } from '../repositories/prisma/prisma-products-repository'
-import { CreateProductUseCase } from '../use-cases/products/create'
 import { UnauthorizedError } from '../use-cases/errors/unauthorized-error'
-import { PrismaUsersRepository } from '../repositories/prisma/prisma-users-repository'
+import { makeCreateProductUseCase } from '../use-cases/factories/make-create-product-use-case'
 
 export async function createProduct(
   request: FastifyRequest,
@@ -23,12 +21,7 @@ export async function createProduct(
   )
 
   try {
-    const prismaProductsRepository = new PrismaProductsRepository()
-    const prismaUsersRepository = new PrismaUsersRepository()
-    const createProductUseCase = new CreateProductUseCase(
-      prismaProductsRepository,
-      prismaUsersRepository,
-    )
+    const createProductUseCase = makeCreateProductUseCase()
 
     await createProductUseCase.execute({
       name,
