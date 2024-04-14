@@ -18,4 +18,5 @@ export interface ProductsRepository {
   getAll(stock_id: string): Promise<Product[]>
   updateProduct(data: UpdateProductRequest): Promise<Product>
   findById(product_id: string): Promise<Product | null>
+  deleteOneProductById(product_id: string): Promise<Product>
 }

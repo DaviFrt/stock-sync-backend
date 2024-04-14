@@ -7,6 +7,7 @@ import { createStock } from './controllers/create-stock.controller'
 import { createProduct } from './controllers/create-product.controller'
 import { getAllProducts } from './controllers/get-all-products.controller'
 import { updateProduct } from './controllers/update-product.controller'
+import { deleteProduct } from './controllers/delete-product-by-id.controller'
 
 export async function appRoutes(app: FastifyInstance) {
   app.post('/users', register)
@@ -16,4 +17,5 @@ export async function appRoutes(app: FastifyInstance) {
   app.post('/products', { onRequest: [verifyJWT] }, createProduct)
   app.get('/products', { onRequest: [verifyJWT] }, getAllProducts)
   app.post('/products/:id', { onRequest: [verifyJWT] }, updateProduct)
+  app.delete('/products/:id', { onRequest: [verifyJWT] }, deleteProduct)
 }

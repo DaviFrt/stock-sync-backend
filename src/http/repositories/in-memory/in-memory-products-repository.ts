@@ -71,4 +71,11 @@ export class InMemoryProductsRepository implements ProductsRepository {
 
     return product
   }
+
+  async deleteOneProductById(product_id: string) {
+    const product = this.items.find((product) => product.id === product_id)
+    this.items.filter((product) => product.id !== product_id)
+
+    return product!
+  }
 }
