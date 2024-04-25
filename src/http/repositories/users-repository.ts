@@ -1,4 +1,4 @@
-import { Prisma, User } from '@prisma/client'
+import { Prisma } from '@prisma/client'
 
 export interface CreateUserRequest {
   data: Prisma.UserCreateInput
@@ -9,9 +9,19 @@ export interface CreateStockIdRequest {
   user_id: string
   stock_id: string
 }
+
+interface UserResponse {
+  id: string
+  name: string
+  email: string
+  stock_id: string | null
+}
 export interface UsersRepository {
-  create({ data, stock_id }: CreateUserRequest): Promise<User>
-  createStockId({ user_id, stock_id }: CreateStockIdRequest): Promise<User>
-  findByEmail(email: string): Promise<User | null>
-  findById(user_id: string): Promise<User | null>
+  create({ data, stock_id }: CreateUserRequest): Promise<UserResponse>
+  createStockId({
+    user_id,
+    stock_id,
+  }: CreateStockIdRequest): Promise<UserResponse>
+  findByEmail(email: string): Promise<UserResponse | null>
+  findById(user_id: string): Promise<UserResponse | null>
 }

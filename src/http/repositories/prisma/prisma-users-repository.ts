@@ -9,6 +9,12 @@ export class PrismaUsersRepository implements UsersRepository {
   async create({ data }: CreateUserRequest) {
     const user = await prisma.user.create({
       data,
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        stock_id: true,
+      },
     })
 
     return user
@@ -29,6 +35,12 @@ export class PrismaUsersRepository implements UsersRepository {
       where: {
         id: user_id,
       },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        stock_id: true,
+      },
     })
 
     return user
@@ -41,6 +53,12 @@ export class PrismaUsersRepository implements UsersRepository {
       },
       data: {
         stock_id,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        stock_id: true,
       },
     })
 
